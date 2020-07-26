@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Rene's Weather Journal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;500;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, inital-scale=1">
+    <link rel="stylesheet" href="./css/styles.css">
+  </head>
+  <body>
+    <div class="app">
+      <form id="form" class="app__form-container">
+        <div class="app__form-content">
+          <h1>Weather Journal</h1>
+          <label for="zipcode">Your Zipcode</label>
+          <input type="text" name="zipcode" id="zipcode" required>
+          <label for="feeling">How Are You Feeling</label>
+          <textarea name="feeling" id="feeling" rows="10" required></textarea>
+        </div>
+        <button class="app__form-submit" type="submit">Insert Entry</button>
+      </form>
+      <div class="app__entries-container">
+        <h2 class="app__entries-title">Latest Entries</h2>
+        <div class="app__entries-feed">
+          Siia tulevad entryd
+        </div>
+      </div>
+    </div>
+    <footer>
+      <div>Udacity Front End Web Developer Nanodegree Program Project #3: Weather Journal App</div>
+    </footer>
+    <!-- Keep this at the end. -->
+    <script src="./js/app.js"></script>
+  </body>
+</html>
