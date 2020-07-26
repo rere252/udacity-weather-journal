@@ -1,4 +1,5 @@
 const port = 8000;
+// TODO this is getting out of hand, named parameters should be used.
 let countryCode = process.argv[2];
 if (!countryCode) {
   console.warn('No country code provided, defaulting to "us".')
@@ -39,11 +40,14 @@ app.post('/newEntry', async (req, resp) => {
     const asEntryObject = toJournalEntry(weatherEntry, feelings);
     journalEntries.push(asEntryObject);
     resp.sendStatus(200);
+    console.log('Inserted new journal entry: ' + JSON.stringify(asEntryObject));
   } catch (e) {
     console.error(e);
     resp.status(500).send(e);
   }
 });
+
+app.get('/allEntries', (req, resp) => resp.json(journalEntries));
 
 // Handlers
 async function getCurrentWeatherEntryByZip(zipCode) {
@@ -51,17 +55,21 @@ async function getCurrentWeatherEntryByZip(zipCode) {
   return await fetch(url)
     .then(resp => resp.json())
     .then(async json => {
+      let weatherData;
       if (json.cod == 404) {
+        // Fallback.
         const cityName = await getCityName(zipCode);
-        const weatherData = await getCurrentWeatherDataByCity(cityName);
-        const weather = weatherData.weather[0];
-        if (weather) {
-          const weatherDescr = weather.description;
-          const temp = weatherData.main.temp;
-          const celsiusSymbolHTML = '&#8451;';
-          const weatherEntry = `${temp}${celsiusSymbolHTML}, ${weatherDescr}.`;
-          return weatherEntry;
-        }
+        weatherData = await getCurrentWeatherDataByCity(cityName);
+      } else {
+        weatherData = json;
+      }
+      const weather = weatherData.weather[0];
+      if (weather) {
+        const weatherDescr = weather.description;
+        const temp = weatherData.main.temp;
+        const celsiusSymbolHTML = '&#8451;';
+        const weatherEntry = `${temp}${celsiusSymbolHTML}, ${weatherDescr}.`;
+        return weatherEntry;
       }
       throw new Error(`Failed to find weather data for zip code "${zipCode}"`);
     });
