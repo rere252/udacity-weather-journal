@@ -34,9 +34,7 @@ class App {
         },
         body: JSON.stringify(jsonData)
       });
-      if (resp.ok) {
-        return await resp.json();
-      } else {
+      if (!resp.ok) {
         throw new Error(resp.statusText);
       }
     } catch (e) {
