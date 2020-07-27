@@ -10,12 +10,11 @@ async function insertNewEntry(req, resp) {
   try {
     const weatherEntry = await apiService.getCurrentWeatherEntryByZip(zipCode);
     const asEntryObject = toJournalEntry(weatherEntry, feelings);
-    journalEntries.unshift(asEntryObject);
+    journalEntries.push(asEntryObject);
     resp.sendStatus(200);
     console.log('Inserted new journal entry: ' + JSON.stringify(asEntryObject));
   } catch (e) {
-    console.error(e);
-    resp.status(500).send(e);
+    resp.status(500).send(e.message);
   }
 }
 
@@ -26,7 +25,12 @@ async function getAllEntries(req, resp) {
 function toJournalEntry(weather, feelings) {
   const weatherEntry = weather.weatherEntry;
   const dateTime = weather.dateTime;
-  return {weatherEntry, dateTime, feelings};
+  return Object.freeze({
+    id: journalEntries.length + 1,
+    weatherEntry,
+    dateTime,
+    feelings
+  });
 }
 
 // Exports

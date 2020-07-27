@@ -9,14 +9,14 @@ const countryCode = cmdArgs.countryCode;
 // Using this as a fallback to get city name and then querying the OpenWeather API 
 // again using city name instead.
 async function getCityName(zipCode) {
-  const url = getZipcodebaseAPIUrl(zipCode);
-  const locationInfo = await fetch(url).then(resp => resp.json());
-  const codeResults = locationInfo.results[zipCode];
-  if (codeResults.length > 0) {
+  try {
+    const url = getZipcodebaseAPIUrl(zipCode);
+    const locationInfo = await fetch(url).then(resp => resp.json());
+    const codeResults = locationInfo.results[zipCode];
     const city = codeResults[0].city;
     return city;
-  } else {
-    throw new Error('City not found.');
+  } catch (e) {
+    throw new Error(`No city not found for zip code ${zipCode}.`);
   }
 }
 

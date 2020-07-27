@@ -22,7 +22,7 @@ async function getCurrentWeatherEntryByZip(zipCode) {
       const weather = weatherData.weather[0];
       if (weather) {
         const weatherDescr = weather.description;
-        const temp = weatherData.main.temp;
+        const temp = Math.round(weatherData.main.temp);
         const celsiusSymbolHTML = '&#8451;';
         const weatherEntry = `${temp}${celsiusSymbolHTML}, ${weatherDescr}.`;
         const dateTime = formatDateTime(new Date(Date(weatherData.dt)));

@@ -11,7 +11,7 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 // Serve the front-end site as well.
-app.use(express.static('public'));
+app.use(express.static('site'));
 
 // Attach routes.
 app.use(journalRouter);
