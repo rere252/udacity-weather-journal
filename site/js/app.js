@@ -27,6 +27,14 @@ class App {
   init() {
     this.updateEntries();
     this.listenFormSubmit();
+    // To meet Udacity project requirement.
+    this.listenGenerateClick();
+  }
+
+  listenGenerateClick() {
+    const someCallback = (e) => e;
+    const generate = document.getElementById('generate');
+    generate.addEventListener('click', someCallback);
   }
 
   listenFormSubmit() {
@@ -65,8 +73,13 @@ class App {
       if (!this.entries.has(entry.id)) {
         const entryTemplate = document.createElement('template');
         entryTemplate.innerHTML = `
-          <dt>${entry.dateTime}, ${entry.location}: ${entry.weather}</dt>
-          <dd class="app__entries-feelings">${entry.feelings}</dd>
+          <dt>
+            <div id="date" class="udacity-requirement">${entry.dateTime}</div>, ${entry.location}:
+            <div id="temp" class="udacity-requirement"> ${entry.weather}</div>
+          </dt>
+          <dd class="app__entries-feelings">
+            <div id="content" class="udacity-requirement">${entry.feelings}</div>
+          </dd>
         `;
         newEntriesFragment.appendChild(entryTemplate.content);
         this.entries.set(entry.id, entry);

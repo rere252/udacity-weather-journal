@@ -15,13 +15,10 @@ async function getCurrentWeatherEntryByZip(zipCode) {
       if (json.cod == 404) {
         // Fallback.
         const cityName = await zipcodebase.getCityName(zipCode);
-        console.log(cityName);
         weatherData = await getCurrentWeatherDataByCity(cityName);
-        console.log(weatherData);
       } else {
         weatherData = json;
       }
-      console.log(weatherData);
       const weatherSummary = weatherData.weather[0];
       if (weatherSummary) {
         const weatherDescr = weatherSummary.description;
@@ -37,7 +34,6 @@ async function getCurrentWeatherEntryByZip(zipCode) {
 
 async function getCurrentWeatherDataByCity(cityName) {
   const url = getCityWeatherAPIUrl(cityName);
-  console.log(url);
   try {
     return await fetch(url).then(resp => resp.json());
   } catch (e) {

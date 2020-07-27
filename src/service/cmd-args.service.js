@@ -2,8 +2,8 @@ const args = require('minimist')(process.argv.slice(2));
 
 let countryCode = args.countryCode;
 if (!countryCode) {
-  console.warn('No country code provided, defaulting to "us".')
-  countryCode = 'us';
+  console.warn('No country code provided, defaulting to "ee".')
+  countryCode = 'ee';
 }
 
 const weatherAPIKey = args.weatherAPIKey;

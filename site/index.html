@@ -11,13 +11,13 @@
     <div class="app">
       <form id="form" class="app__form-container">
           <h1>Weather Journal</h1>
-          <label for="zipCode">Your Zip Code</label>
-          <input type="text" name="zipCode" id="zipCode" required>
+          <label for="zip">Your Zip Code</label>
+          <input type="text" name="zipCode" id="zip" placeholder="enter zip code here" required>
           <label for="feelings">How Are You Feeling</label>
           <textarea name="feelings" id="feelings" rows="10" required></textarea>
-          <button class="app__submit-button" type="submit">Insert Entry</button>
+          <button class="app__submit-button" type="submit" id="generate">Insert Entry</button>
       </form>
-      <div class="app__entries-container">
+      <div class="app__entries-container" id="entryHolder">
         <h2 class="app__entries-title">Latest Entries</h2>
         <dl id="entries" class="app__entries-feed"></dl>
       </div>
