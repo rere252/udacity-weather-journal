@@ -10,6 +10,6 @@ To resolve dependencies run `npm install`. To launch the server using `node` run
 
 ## Command line arguments
 
-`--countryCode` **Optional** ISO 3166 Alpha-2 country code to combine the ZIP code with. Will default to "ee" (Estonia).
-`--weatherAPIKey` **Required** [OpenWeather](https://openweathermap.org/) map API key. Used for getting weather data.
+`--countryCode` **Optional** ISO 3166 Alpha-2 country code to combine the ZIP code with. Will default to "ee" (Estonia).  
+`--weatherAPIKey` **Required** [OpenWeather](https://openweathermap.org/) map API key. Used for getting weather data.  
 `--zipcodebaseAPIKey` **Optional** [Zipcodebase](https://zipcodebase.com/) api key. Used as a fallback to resolve ZIP codes to a city name and then attempting the OpenWeather query again using the city name instead of ZIP code.
