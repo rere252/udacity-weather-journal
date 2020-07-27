@@ -15,19 +15,21 @@ async function getCurrentWeatherEntryByZip(zipCode) {
       if (json.cod == 404) {
         // Fallback.
         const cityName = await zipcodebase.getCityName(zipCode);
+        console.log(cityName);
         weatherData = await getCurrentWeatherDataByCity(cityName);
+        console.log(weatherData);
       } else {
         weatherData = json;
       }
-      const weather = weatherData.weather[0];
-      if (weather) {
-        const weatherDescr = weather.description;
+      console.log(weatherData);
+      const weatherSummary = weatherData.weather[0];
+      if (weatherSummary) {
+        const weatherDescr = weatherSummary.description;
         const temp = Math.round(weatherData.main.temp);
         const celsiusSymbolHTML = '&#8451;';
-        const weatherEntry = `${temp}${celsiusSymbolHTML}, ${weatherDescr}.`;
+        const weatherEntry = `${temp}${celsiusSymbolHTML}, ${weatherDescr}`;
         const dateTime = formatDateTime(new Date(Date(weatherData.dt)));
-        console.log(dateTime)
-        return {weatherEntry, dateTime};
+        return {weather: weatherEntry, dateTime, location: weatherData.name};
       }
       throw new Error(`Failed to find weather data for zip code "${zipCode}"`);
     });
@@ -35,6 +37,7 @@ async function getCurrentWeatherEntryByZip(zipCode) {
 
 async function getCurrentWeatherDataByCity(cityName) {
   const url = getCityWeatherAPIUrl(cityName);
+  console.log(url);
   try {
     return await fetch(url).then(resp => resp.json());
   } catch (e) {
@@ -45,12 +48,12 @@ async function getCurrentWeatherDataByCity(cityName) {
 // Util
 const weatherBaseURL = 'http://api.openweathermap.org/data/2.5/weather?units=metric&';
 function getZIPWeatherAPIUrl(zipCode) {
-  return `${weatherBaseURL}zip=${zipCode},${countryCode.toLowerCase()}&appid=${weatherAPIKey}`;
+  return encodeURI(`${weatherBaseURL}zip=${zipCode},${countryCode.toLowerCase()}&appid=${weatherAPIKey}`);
 }
 
 function getCityWeatherAPIUrl(cityName) {
   // Two consecutive commas not a mistake, it's "unfilled" state value.
-  return `${weatherBaseURL}q=${cityName},,${countryCode}&appid=${weatherAPIKey}`;
+  return encodeURI(`${weatherBaseURL}q=${cityName},,${countryCode}&appid=${weatherAPIKey}`);
 }
 
 function formatDateTime(date) {

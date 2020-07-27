@@ -16,7 +16,7 @@ async function getCityName(zipCode) {
     const city = codeResults[0].city;
     return city;
   } catch (e) {
-    throw new Error(`No city not found for zip code ${zipCode}.`);
+    throw new Error(`No city found for zip code '${zipCode}'.`);
   }
 }
 

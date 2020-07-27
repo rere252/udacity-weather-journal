@@ -14,6 +14,7 @@ async function insertNewEntry(req, resp) {
     resp.sendStatus(200);
     console.log('Inserted new journal entry: ' + JSON.stringify(asEntryObject));
   } catch (e) {
+    console.error(e);
     resp.status(500).send(e.message);
   }
 }
@@ -22,14 +23,14 @@ async function getAllEntries(req, resp) {
   return resp.json(journalEntries);
 }
 
-function toJournalEntry(weather, feelings) {
-  const weatherEntry = weather.weatherEntry;
-  const dateTime = weather.dateTime;
+function toJournalEntry(data, feelings) {
+  const dateTime = data.dateTime;
   return Object.freeze({
     id: journalEntries.length + 1,
-    weatherEntry,
+    weather: data.weather,
     dateTime,
-    feelings
+    feelings,
+    location: data.location
   });
 }
 

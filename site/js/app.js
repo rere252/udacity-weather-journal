@@ -25,6 +25,7 @@ class App {
   }
 
   init() {
+    this.updateEntries();
     this.listenFormSubmit();
   }
 
@@ -41,24 +42,33 @@ class App {
     this.journalService.postEntry(formAsJSON)
       .then(async resp => {
         if (resp.ok) {
-          return this.journalService.getAllEntries();
+          this.updateEntries();
+          form.reset();
         } else {
           throw new Error(await resp.text());
         }
       })
-      .then(entries => this.insertNewEntriesToDOM(entries))
-      .catch(e => alert(e));
-    // todo uncomment after debug
-    //form.reset();
+      .catch(e => {
+        alert(e.message);
+        console.error(e);
+      });
+  }
+
+  updateEntries() {
+    this.journalService.getAllEntries()
+      .then(entries => this.insertNewEntriesToDOM(entries));
   }
 
   insertNewEntriesToDOM(entries) {
     for (const entry of entries) {
       const newEntriesFragment = new DocumentFragment();
       if (!this.entries.has(entry.id)) {
-        const entryDiv = document.createElement('div');
-        entryDiv.textContent = JSON.stringify(entry);
-        newEntriesFragment.appendChild(entryDiv);
+        const entryTemplate = document.createElement('template');
+        entryTemplate.innerHTML = `
+          <dt>${entry.dateTime}, ${entry.location}: ${entry.weather}</dt>
+          <dd class="app__entries-feelings">${entry.feelings}</dd>
+        `;
+        newEntriesFragment.appendChild(entryTemplate.content);
         this.entries.set(entry.id, entry);
       }
       const entriesEl = document.getElementById('entries');

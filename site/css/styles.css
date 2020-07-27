@@ -18,45 +18,62 @@ h1 {
   font-weight: 400;
 }
 
+dt {
+  margin-top: 1rem;
+}
+
+dd {
+  margin-top: 0.25rem;
+}
+
 .app {
-  display: flex;
   align-self: center;
   justify-self: center;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: 86vh;
+  grid-template-areas: "form entries";
   margin: 2rem;
   min-width: 90vw;
-  height: 86vh;
   border-radius: 2rem;
   box-shadow: 0 3px 4px 4px rgba(0, 0, 0, 0.47);
 }
 
 .app__form-container {
+  grid-area: form;
   background: #c71ecb;
-  flex-grow: 3;
+  flex-grow: 2;
   border-radius: 2rem 0 0 2rem;
   display: flex;
   flex-direction: column;
-}
-
-.app__form-content {
-  display: flex;
-  flex-direction: column;
+  font-weight: 300;
   padding: 2rem;
 }
 
-.app__form-submit {
+.app__submit-button {
   margin-top: auto;
   border: 1px solid black;
   padding: 1rem;
-  font-size: 3rem;
+  font-size: 1.5rem;
   font-weight: 300;
-  border-radius: 0 0 0 2rem;
+  border-radius: 0.25rem;
+  background-color: #fff;
+}
+
+.app__submit-button:hover {
+  background: rgb(230, 230, 230);
+}
+
+.app__submit-button:active {
+  margin-bottom: -1px;
 }
 
 .app__entries-container {
+  grid-area: entries;
   padding: 2rem;
   color: black;
   background: #52ff36;
-  flex-grow: 2;
+  flex-grow: 3;
   border-radius: 0 2rem 2rem 0;
   display: flex;
   flex-direction: column;
@@ -70,6 +87,9 @@ h1 {
 
 .app__entries-feed {
   overflow-y: auto;
+}
+
+.app__entries-feelings {
   font-weight: 200;
 }
 
@@ -83,4 +103,15 @@ footer {
   font-weight: 200;
   padding: 0.25rem;
   margin-top: auto;
+}
+
+@media (max-width: 700px) {
+  .app {
+    margin: 1rem 0 1rem 0;
+    grid-template-columns: 100vw;
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-areas:
+      "form"
+      "entries";
+  }
 }

@@ -10,20 +10,16 @@
   <body>
     <div class="app">
       <form id="form" class="app__form-container">
-        <div class="app__form-content">
           <h1>Weather Journal</h1>
           <label for="zipCode">Your Zip Code</label>
           <input type="text" name="zipCode" id="zipCode" required>
           <label for="feelings">How Are You Feeling</label>
           <textarea name="feelings" id="feelings" rows="10" required></textarea>
-        </div>
-        <button class="app__form-submit" type="submit">Insert Entry</button>
+          <button class="app__submit-button" type="submit">Insert Entry</button>
       </form>
       <div class="app__entries-container">
         <h2 class="app__entries-title">Latest Entries</h2>
-        <div id="entries" class="app__entries-feed">
-          Siia tulevad entryd
-        </div>
+        <dl id="entries" class="app__entries-feed"></dl>
       </div>
     </div>
     <footer>
